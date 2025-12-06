@@ -54,10 +54,22 @@ npm run dev
 4. They enter the same room code and join
 5. The video call will start automatically
 
+## Deploy to Railway (One-Click)
+
+1. Push this repo to GitHub
+2. Go to [railway.app](https://railway.app) and create account
+3. Click **"New Project"** → **"Deploy from GitHub repo"**
+4. Select your repo
+5. Railway will auto-detect and deploy everything
+6. Click **"Generate Domain"** in Settings to get your public URL
+
+That's it! Share the URL with family 🎉
+
 ## Tech Stack
 
 - **Frontend**: React 18, Vite
 - **Backend**: Node.js, Express, Socket.io
 - **Real-time Communication**: WebRTC with STUN servers
 
+# Svoi
 # Svoi
