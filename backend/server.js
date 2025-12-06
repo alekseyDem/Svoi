@@ -1,19 +1,23 @@
 const express = require('express');
 const http = require('http');
+const path = require('path');
 const { Server } = require('socket.io');
 const cors = require('cors');
 
 const app = express();
 app.use(cors());
 
+// Serve static frontend files in production
+// Works both when run from root (node backend/server.js) or from backend folder
+const publicPath = path.join(__dirname, 'public');
+app.use(express.static(publicPath));
+console.log('Serving static files from:', publicPath);
+
 const server = http.createServer(app);
-const allowedOrigins = process.env.ALLOWED_ORIGINS 
-  ? process.env.ALLOWED_ORIGINS.split(',') 
-  : ['http://localhost:5173', 'http://localhost:3000'];
 
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    origin: '*',
     methods: ['GET', 'POST']
   }
 });
@@ -78,8 +82,12 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 3001;
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Signaling server running on port ${PORT}`);
+// Serve index.html for all non-API routes (SPA support)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(publicPath, 'index.html'));
 });
 
+const PORT = process.env.PORT || 3001;
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Svoi server running on port ${PORT}`);
+});

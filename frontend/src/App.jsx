@@ -2,9 +2,8 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { io } from 'socket.io-client'
 import './App.css'
 
-// For local development: 'http://localhost:3001'
-// For public access: replace with your ngrok backend URL
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3001'
+// In production, connect to same origin. In dev, connect to local backend.
+const SOCKET_URL = import.meta.env.DEV ? 'http://localhost:3001' : window.location.origin
 
 function App() {
   const [roomId, setRoomId] = useState('')
